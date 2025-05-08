@@ -1,0 +1,16 @@
+Metadata-Version: 2.1
+Name: blossom_boot
+Version: 0.0.0
+Summary: Boot package for all backend microservices
+Author: Bruce Wayne
+Requires-Dist: annotated-types==0.7.0
+Requires-Dist: anyio==4.6.0
+Requires-Dist: blossom_exceptions@ file:///Users/juanasoto/Desktop/blossom/code/exceptions/backend
+Requires-Dist: fastapi==0.115.0
+Requires-Dist: idna==3.10
+Requires-Dist: pydantic==2.9.2
+Requires-Dist: pydantic_core==2.23.4
+Requires-Dist: setuptools==75.1.0
+Requires-Dist: sniffio==1.3.1
+Requires-Dist: starlette==0.38.6
+Requires-Dist: typing_extensions==4.12.2

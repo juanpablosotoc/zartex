@@ -1,0 +1,10 @@
+:root {
+    $bodani-font: 'Bodoni Moda', serif;
+
+    // Title
+
+    --tp-title-large: normal 40px #{$bodani-font};
+    --tp-title-medium: normal 24px #{$bodani-font};
+    --tp-title-small: normal 18px #{$bodani-font};
+    
+}

@@ -1,0 +1,36 @@
+.footer {
+    color: white;
+    background-color: #393E46;
+    padding: 40px;
+    display: flex;
+    justify-content: space-between;
+
+    .linksWrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .title {
+        font: var(--tp-title-small);
+        color: white;
+    }
+
+    .links {
+        display: flex;
+        flex-direction: column;
+
+        a {
+            text-decoration: underline;
+        }
+    }
+
+    .becomeMember {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 16px;
+
+    }
+}

@@ -1,0 +1,41 @@
+.wrapper {
+    padding: 32px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    p {
+        text-align: center;
+        font: var(--tp-title-large);
+        color: #333;
+    }
+
+    .description {
+        font: var(--tp-title-small);
+    }
+
+    .newProducts {
+        display: flex;
+        max-width: 100%;
+
+        .newProduct {
+            width: 25%;
+            overflow: hidden;
+            background-color: red;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.3s ease-out;
+
+            &:hover {
+                transform: scale(1.05);
+            }
+        }
+    }
+}

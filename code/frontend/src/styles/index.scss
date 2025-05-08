@@ -1,0 +1,22 @@
+@import 'variables';
+
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    color: inherit;
+    border: none;
+}
+
+  
+input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+button {
+    background-color: transparent;
+}
