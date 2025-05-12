@@ -1,8 +1,0 @@
-setup.py
-blossom_http.egg-info/PKG-INFO
-blossom_http.egg-info/SOURCES.txt
-blossom_http.egg-info/dependency_links.txt
-blossom_http.egg-info/requires.txt
-blossom_http.egg-info/top_level.txt
-myHttp/__init__.py
-myHttp/stream/__init__.py

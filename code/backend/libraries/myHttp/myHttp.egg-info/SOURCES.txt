@@ -1,0 +1,7 @@
+setup.py
+myHttp/__init__.py
+myHttp.egg-info/PKG-INFO
+myHttp.egg-info/SOURCES.txt
+myHttp.egg-info/dependency_links.txt
+myHttp.egg-info/requires.txt
+myHttp.egg-info/top_level.txt

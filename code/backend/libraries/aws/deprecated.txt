@@ -1,1 +1,0 @@
-This is depracated, use exceptions instead of blossom_exceptions
