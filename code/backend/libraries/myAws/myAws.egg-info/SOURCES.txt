@@ -11,7 +11,4 @@ myAws.egg-info/SOURCES.txt
 myAws.egg-info/dependency_links.txt
 myAws.egg-info/requires.txt
 myAws.egg-info/top_level.txt
-tests/test_dynamodb.py
-tests/test_s3.py
-tests/test_secrets_manager.py
-tests/test_sqs.py
+myAws/tests/__init__.py

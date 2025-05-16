@@ -1,6 +1,6 @@
 import boto3
-import myExceptions
-
+from myExceptions import aws as awsExceptions
+from .config import Config
 
 class SQS:
     @staticmethod
@@ -19,9 +19,9 @@ class SQS:
             SQSException: If there is an error while uploading the message.
         """
         try:
-            sqs = boto3.resource('sqs')
+            sqs = boto3.resource('sqs', region_name=Config.AWS_REGION)
             queue = sqs.get_queue_by_name(QueueName=queueName)
             response = queue.send_message(MessageBody=message)
             return response
         except Exception as e:
-            raise myExceptions.SQSServiceError(f'Error in aws.sqs: Error uploading message: {message} to sqs queue: {queueName}' + str(e))
+            raise awsExceptions.SQSServiceError(f'Error in aws.sqs: Error uploading message: {message} to sqs queue: {queueName}' + str(e))

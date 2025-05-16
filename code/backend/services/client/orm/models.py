@@ -22,7 +22,8 @@ class Product(Base):
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
 
     # Relationships
-    images = relationship("Image", back_populates="product", cascade="all, delete-orphan")
+    product_images = relationship("ProductImage", back_populates="product", cascade="all, delete-orphan")
+    images = relationship("Image", secondary="product_images", back_populates="products", overlaps="product_images")
     inventory_history = relationship("InventoryHistory", back_populates="product", cascade="all, delete-orphan")
     cart_items = relationship("CartItem", back_populates="product", cascade="all, delete-orphan")
     sale_items = relationship("SaleItem", back_populates="product")
@@ -38,13 +39,18 @@ class Image(Base):
     created_at = Column(DateTime, default=func.now())
 
     # Relationships
-    product_images = relationship("ProductImage", back_populates="image")
+    product_images = relationship("ProductImage", back_populates="image", cascade="all, delete-orphan")
+    products = relationship("Product", secondary="product_images", back_populates="images", overlaps="product_images")
 
 class ProductImage(Base):
     __tablename__ = 'product_images'
 
     product_id = Column(Integer, ForeignKey('products.id', ondelete='CASCADE'), primary_key=True)
     image_id = Column(Integer, ForeignKey('images.id', ondelete='CASCADE'), primary_key=True)
+
+    # Relationships
+    product = relationship("Product", back_populates="product_images", overlaps="images,products")
+    image = relationship("Image", back_populates="product_images", overlaps="images,products")
 
 class InventoryHistory(Base):
     __tablename__ = 'inventory_history'
@@ -174,7 +180,7 @@ class Return(Base):
     # Relationships
     sale = relationship("Sale", back_populates="returns")
     client = relationship("Client", back_populates="returns")
-    return_items = relationship("ReturnItem", back_populates="return", cascade="all, delete-orphan")
+    return_items = relationship("ReturnItem", back_populates="return_record", cascade="all, delete-orphan")
 
 class ReturnItem(Base):
     __tablename__ = 'return_items'
@@ -187,7 +193,7 @@ class ReturnItem(Base):
     total_price = Column(DECIMAL(10, 2), nullable=False)
 
     # Relationships
-    return_ = relationship("Return", back_populates="return_items")
+    return_record = relationship("Return", back_populates="return_items")
     sale_item = relationship("SaleItem", back_populates="return_items")
 
 class Discount(Base):

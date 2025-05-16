@@ -1,5 +1,5 @@
 import boto3
-import myExceptions
+from myExceptions import aws as awsExceptions
 from .config import Config
 import logging
 
@@ -29,7 +29,7 @@ class DynamoDB:
         except Exception as e:
             error_message = f'Error in aws.dynamodb: Error retrieving table: {table_name}. {str(e)}'
             logger.error(f"DynamoDBServiceError | Message: {error_message} | Status Code: 502 | Error Code: dynamodb_service_error")
-            raise myExceptions.DynamoDBServiceError(error_message)
+            raise awsExceptions.DynamoDBServiceError(error_message)
     
     @classmethod
     def put_item(cls, item: dict, table_name: str) -> None:
@@ -49,16 +49,16 @@ class DynamoDB:
         try:
             table = cls.get_table(table_name)
             table.put_item(Item=item)
-        except myExceptions.DynamoDBServiceError as e:
+        except awsExceptions.DynamoDBServiceError as e:
             # Re-raise with additional context
             error_message = f'Error in aws.dynamodb: Error putting item: {item} into table: {table_name}. {str(e)}'
             logger.error(f"DynamoDBServiceError | Message: {error_message} | Status Code: 502 | Error Code: dynamodb_service_error")
-            raise myExceptions.DynamoDBServiceError(error_message) from e
+            raise awsExceptions.DynamoDBServiceError(error_message) from e
         except Exception as e:
             # Wrap any other exceptions
             error_message = f'Error in aws.dynamodb: Error putting item: {item} into table: {table_name}. {str(e)}'
             logger.error(f"DynamoDBServiceError | Message: {error_message} | Status Code: 502 | Error Code: dynamodb_service_error")
-            raise myExceptions.DynamoDBServiceError(error_message) from e
+            raise awsExceptions.DynamoDBServiceError(error_message) from e
                 
     @classmethod
     def get_item(cls, key: dict, table_name: str) -> dict:
@@ -79,13 +79,13 @@ class DynamoDB:
             table = cls.get_table(table_name)
             response = table.get_item(Key=key)
             return response.get('Item', None)
-        except myExceptions.DynamoDBServiceError as e:
+        except awsExceptions.DynamoDBServiceError as e:
             # Re-raise with additional context
             error_message = f'Error in aws.dynamodb: Error getting item with key: {key} from table: {table_name}. {str(e)}'
             logger.error(f"DynamoDBServiceError | Message: {error_message} | Status Code: 502 | Error Code: dynamodb_service_error")
-            raise myExceptions.DynamoDBServiceError(error_message) from e
+            raise awsExceptions.DynamoDBServiceError(error_message) from e
         except Exception as e:
             # Wrap any other exceptions
             error_message = f'Error in aws.dynamodb: Error getting item with key: {key} from table: {table_name}. {str(e)}'
             logger.error(f"DynamoDBServiceError | Message: {error_message} | Status Code: 502 | Error Code: dynamodb_service_error")
-            raise myExceptions.DynamoDBServiceError(error_message) from e
+            raise awsExceptions.DynamoDBServiceError(error_message) from e

@@ -7,9 +7,6 @@ class ImageBase(BaseModel):
     medium_url: str
     large_url: str
 
-class ImageCreate(ImageBase):
-    pass
-
 class ImageResponse(ImageBase):
     id: int
     created_at: datetime

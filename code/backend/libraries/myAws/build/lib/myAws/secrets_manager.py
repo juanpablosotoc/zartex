@@ -1,6 +1,6 @@
 import boto3
-import myExceptions
-
+from myExceptions import aws as awsExceptions
+from .config import Config
 
 class SecretsManager:
     @staticmethod
@@ -18,7 +18,7 @@ class SecretsManager:
             SecretsManagerException: If there is an error retrieving the secret.
         """
         try:
-            session = boto3.Session()
+            session = boto3.Session(region_name=Config.AWS_REGION)
             # Assume the role
             client = session.client(service_name='secretsmanager')
             # Retrieve the secret value
@@ -35,5 +35,5 @@ class SecretsManager:
             return secret
 
         except Exception as e:
-            raise myExceptions.SecretsManagerServiceError(f'Error in aws.secrets_manager: Error retrieving secret: {secret_name}' + str(e))
+            raise awsExceptions.SecretsManagerServiceError(f'Error in aws.secrets_manager: Error retrieving secret: {secret_name} ' + str(e))
         

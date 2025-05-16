@@ -1,3 +1,6 @@
+DROP DATABASE IF EXISTS client_db;
+CREATE DATABASE client_db;
+USE client_db;
 CREATE TABLE products (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,

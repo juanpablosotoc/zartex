@@ -9,7 +9,7 @@ def parse_requirements():
 
 setup(
     name='myAws',
-    version='0.0.0',
+    version='0.0.3',
     packages=find_packages(),
     install_requires=parse_requirements(),
     exclude_package_data={'': ['*.env', '.env']},  # Extra safeguard to exclude .env files

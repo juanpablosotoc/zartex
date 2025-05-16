@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+
+ssh -i "connect_rdsTest_server.pem" ubuntu@ec2-78-12-219-190.mx-central-1.compute.amazonaws.com
