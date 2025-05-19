@@ -1,0 +1,10 @@
+MANIFEST.in
+setup.py
+myEncryption/__init__.py
+myEncryption/config.py
+myEncryption.egg-info/PKG-INFO
+myEncryption.egg-info/SOURCES.txt
+myEncryption.egg-info/dependency_links.txt
+myEncryption.egg-info/requires.txt
+myEncryption.egg-info/top_level.txt
+myEncryption/tests/__init__.py

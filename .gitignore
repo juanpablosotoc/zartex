@@ -1,2 +1,9 @@
-# Ignore any environment files (e.g. .env, dev.env, prod.env) anywhere in the repo
+# Ignore any environment files (e.g. .env, dev.env, prod.env) anywhere
 *.env
+
+# Ignore admin PEMs
+admin/*.pem
+
+# Ignore Python virtual environments
+venv/
+.venv/

@@ -1,0 +1,5 @@
+# MANIFEST.in
+
+# Exclude .env files
+global-exclude *.env
+global-exclude .env

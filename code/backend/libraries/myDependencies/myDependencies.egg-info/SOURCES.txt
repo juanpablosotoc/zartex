@@ -1,0 +1,10 @@
+MANIFEST.in
+setup.py
+myDependencies/__init__.py
+myDependencies/auth.py
+myDependencies.egg-info/PKG-INFO
+myDependencies.egg-info/SOURCES.txt
+myDependencies.egg-info/dependency_links.txt
+myDependencies.egg-info/requires.txt
+myDependencies.egg-info/top_level.txt
+myDependencies/tests/__init__.py

@@ -1,0 +1,24 @@
+#!/bin/zsh
+
+# Check if a filename was provided
+if [ -z "$1" ]; then
+  echo "Usage: source $0 <env_file>"
+  return 1 2>/dev/null || exit 1
+fi
+
+ENV_FILE="$1"
+
+# Check if the file exists
+if [ ! -f "$ENV_FILE" ]; then
+  echo "Error: File '$ENV_FILE' not found."
+  return 1 2>/dev/null || exit 1
+fi
+
+# Export each line safely
+while IFS='=' read -r key value; do
+  # Skip comments and empty lines
+  [[ "$key" =~ ^#.*$ || -z "$key" ]] && continue
+  export "$key=$value"
+done < <(grep -v '^#' "$ENV_FILE")
+
+echo "✅ Environment variables from '$ENV_FILE' exported globally (in this shell session)."
