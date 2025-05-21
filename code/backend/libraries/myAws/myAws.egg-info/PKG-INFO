@@ -1,38 +1,70 @@
 Metadata-Version: 2.4
 Name: myAws
-Version: 0.0.3
+Version: 0.0.4
 Summary: Aws package for Zartex
 Author: Bruce Wayne
-Requires-Dist: annotated-types==0.7.0
-Requires-Dist: anyio==4.9.0
-Requires-Dist: boto3==1.38.17
-Requires-Dist: botocore==1.38.17
-Requires-Dist: certifi==2025.4.26
-Requires-Dist: click==8.2.0
-Requires-Dist: fastapi==0.115.12
-Requires-Dist: h11==0.16.0
-Requires-Dist: httpcore==1.0.9
-Requires-Dist: httpx==0.28.1
-Requires-Dist: idna==3.10
-Requires-Dist: iniconfig==2.1.0
-Requires-Dist: jmespath==1.0.1
-Requires-Dist: myExceptions@ file:///Users/juanasoto/Desktop/SoftwareDev/official_proyects/zartex/code/backend/libraries/myExceptions
-Requires-Dist: packaging==25.0
-Requires-Dist: pluggy==1.6.0
-Requires-Dist: pydantic==2.11.4
-Requires-Dist: pydantic_core==2.33.2
-Requires-Dist: pytest==8.3.5
-Requires-Dist: python-dateutil==2.9.0.post0
-Requires-Dist: s3transfer==0.12.0
-Requires-Dist: setuptools==80.7.1
-Requires-Dist: six==1.17.0
-Requires-Dist: sniffio==1.3.1
-Requires-Dist: starlette==0.46.2
-Requires-Dist: typing-inspection==0.4.0
-Requires-Dist: typing_extensions==4.13.2
-Requires-Dist: urllib3==2.4.0
-Requires-Dist: uvicorn==0.34.2
-Requires-Dist: wheel==0.45.1
+Provides-Extra: docker
+Requires-Dist: annotated-types==0.7.0; extra == "docker"
+Requires-Dist: anyio==4.9.0; extra == "docker"
+Requires-Dist: boto3==1.38.17; extra == "docker"
+Requires-Dist: botocore==1.38.17; extra == "docker"
+Requires-Dist: certifi==2025.4.26; extra == "docker"
+Requires-Dist: click==8.2.0; extra == "docker"
+Requires-Dist: fastapi==0.115.12; extra == "docker"
+Requires-Dist: h11==0.16.0; extra == "docker"
+Requires-Dist: httpcore==1.0.9; extra == "docker"
+Requires-Dist: httpx==0.28.1; extra == "docker"
+Requires-Dist: idna==3.10; extra == "docker"
+Requires-Dist: iniconfig==2.1.0; extra == "docker"
+Requires-Dist: jmespath==1.0.1; extra == "docker"
+Requires-Dist: myExceptions; extra == "docker"
+Requires-Dist: packaging==25.0; extra == "docker"
+Requires-Dist: pluggy==1.6.0; extra == "docker"
+Requires-Dist: pydantic==2.11.4; extra == "docker"
+Requires-Dist: pydantic_core==2.33.2; extra == "docker"
+Requires-Dist: pytest==8.3.5; extra == "docker"
+Requires-Dist: python-dateutil==2.9.0.post0; extra == "docker"
+Requires-Dist: s3transfer==0.12.0; extra == "docker"
+Requires-Dist: setuptools==80.7.1; extra == "docker"
+Requires-Dist: six==1.17.0; extra == "docker"
+Requires-Dist: sniffio==1.3.1; extra == "docker"
+Requires-Dist: starlette==0.46.2; extra == "docker"
+Requires-Dist: typing-inspection==0.4.0; extra == "docker"
+Requires-Dist: typing_extensions==4.13.2; extra == "docker"
+Requires-Dist: urllib3==2.4.0; extra == "docker"
+Requires-Dist: uvicorn==0.34.2; extra == "docker"
+Requires-Dist: wheel==0.45.1; extra == "docker"
+Provides-Extra: dev
+Requires-Dist: annotated-types==0.7.0; extra == "dev"
+Requires-Dist: anyio==4.9.0; extra == "dev"
+Requires-Dist: boto3==1.38.17; extra == "dev"
+Requires-Dist: botocore==1.38.17; extra == "dev"
+Requires-Dist: certifi==2025.4.26; extra == "dev"
+Requires-Dist: click==8.2.0; extra == "dev"
+Requires-Dist: fastapi==0.115.12; extra == "dev"
+Requires-Dist: h11==0.16.0; extra == "dev"
+Requires-Dist: httpcore==1.0.9; extra == "dev"
+Requires-Dist: httpx==0.28.1; extra == "dev"
+Requires-Dist: idna==3.10; extra == "dev"
+Requires-Dist: iniconfig==2.1.0; extra == "dev"
+Requires-Dist: jmespath==1.0.1; extra == "dev"
+Requires-Dist: myExceptions@ file:///Users/juanasoto/Desktop/SoftwareDev/official_proyects/zartex/code/backend/libraries/myExceptions ; extra == "dev"
+Requires-Dist: packaging==25.0; extra == "dev"
+Requires-Dist: pluggy==1.6.0; extra == "dev"
+Requires-Dist: pydantic==2.11.4; extra == "dev"
+Requires-Dist: pydantic_core==2.33.2; extra == "dev"
+Requires-Dist: pytest==8.3.5; extra == "dev"
+Requires-Dist: python-dateutil==2.9.0.post0; extra == "dev"
+Requires-Dist: s3transfer==0.12.0; extra == "dev"
+Requires-Dist: setuptools==80.7.1; extra == "dev"
+Requires-Dist: six==1.17.0; extra == "dev"
+Requires-Dist: sniffio==1.3.1; extra == "dev"
+Requires-Dist: starlette==0.46.2; extra == "dev"
+Requires-Dist: typing-inspection==0.4.0; extra == "dev"
+Requires-Dist: typing_extensions==4.13.2; extra == "dev"
+Requires-Dist: urllib3==2.4.0; extra == "dev"
+Requires-Dist: uvicorn==0.34.2; extra == "dev"
+Requires-Dist: wheel==0.45.1; extra == "dev"
 Dynamic: author
-Dynamic: requires-dist
+Dynamic: provides-extra
 Dynamic: summary

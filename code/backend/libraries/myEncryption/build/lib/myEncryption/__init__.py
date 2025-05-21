@@ -28,3 +28,4 @@ class Encryption:
             jwt.exceptions.InvalidTokenError: If the token is invalid
         """
         return jwt.decode(token, Config.JWT_SECRET_KEY, algorithms=[Config.JWT_ALGORITHM])
+

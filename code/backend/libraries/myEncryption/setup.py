@@ -1,18 +1,28 @@
 import os
 from setuptools import setup, find_packages
 
-
-# Read the contents of the requirements.txt file
-def parse_requirements():
-    with open(os.path.join(os.path.dirname(__file__), 'requirements.txt')) as f:
-        return f.read().splitlines()
+def parse_reqs(fname):
+    path = os.path.join(os.path.dirname(__file__), fname)
+    with open(path) as f:
+        return [
+            line.strip()
+            for line in f
+            if line.strip() and not line.startswith('#')
+        ]
 
 setup(
-    name='myEncryption',
-    version='0.0.2',
+    name="myEncryption",
+    version="0.0.3",
     packages=find_packages(),
-    install_requires=parse_requirements(),
-    exclude_package_data={'': ['*.env', '.env']},  # Extra safeguard to exclude .env files
-    author='Bruce Wayne',
-    description='Encryption package for Zartex',
+    exclude_package_data={'': ['*.env', '.env']},
+    # No default dependencies: you _must_ pick dev _or_ docker
+    install_requires=[],
+    extras_require={
+        # pip install .[docker] → will pull in exactly these
+        'docker': parse_reqs('requirements/docker-requirements.txt'),
+        # pip install .[dev]    → will pull in exactly these
+        'dev':    parse_reqs('requirements/requirements.txt'),
+    },
+    author="Bruce Wayne",
+    description="Encryption package for Zartex",
 )

@@ -8,7 +8,7 @@ class ImageBase(BaseModel):
     large_url: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class ImageResponse(ImageBase):
     id: int

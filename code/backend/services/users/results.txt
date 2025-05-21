@@ -1,0 +1,860 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.3, pytest-8.3.5, pluggy-1.6.0
+rootdir: /Users/juanasoto/Desktop/SoftwareDev/official_proyects/zartex/code/backend/services/users
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-0.26.0
+asyncio: mode=Mode.STRICT, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 8 items
+
+tests/addresses/test_addresses.py FFFFFFFF                               [100%]
+
+=================================== FAILURES ===================================
+_________________________ test_create_address_success __________________________
+
+test_client = <starlette.testclient.TestClient object at 0x10bb3d160>
+mock_db_session = <AsyncMock id='4483597040'>
+create_test_client = <myOrm.models.Client object at 0x10bdcf610>
+
+    @ pytest.mark.asyncio
+    async def test_create_address_success(test_client, mock_db_session, create_test_client):
+        # Simulate existing client check
+        mock_db_session.execute.return_value = DummyResult(create_test_client)
+        # Simulate refresh() populating id and created_at
+        def refresh_side_effect(instance):
+            instance.id = 1
+            instance.created_at = datetime.utcnow()
+        mock_db_session.refresh.side_effect = refresh_side_effect
+    
+        payload = {
+            "street_address": "123 Main St",
+            "city": "Testville",
+            "state": "TS",
+            "postal_code": "12345",
+            "country": "Testland",
+            "is_default": False
+        }
+>       response = test_client.post(
+            "/api/v1/users/addresses/",
+            json=payload
+        )
+
+tests/addresses/test_addresses.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.13/site-packages/starlette/testclient.py:538: in post
+    return super().post(
+venv/lib/python3.13/site-packages/httpx/_client.py:1144: in post
+    return self.request(
+venv/lib/python3.13/site-packages/starlette/testclient.py:437: in request
+    return super().request(
+venv/lib/python3.13/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+venv/lib/python3.13/site-packages/httpx/_client.py:914: in send
+    response = self._send_handling_auth(
+venv/lib/python3.13/site-packages/httpx/_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+venv/lib/python3.13/site-packages/httpx/_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+venv/lib/python3.13/site-packages/httpx/_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+venv/lib/python3.13/site-packages/starlette/testclient.py:340: in handle_request
+    raise exc
+venv/lib/python3.13/site-packages/starlette/testclient.py:337: in handle_request
+    portal.call(self.app, scope, receive, send)
+venv/lib/python3.13/site-packages/anyio/from_thread.py:290: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+venv/lib/python3.13/site-packages/anyio/from_thread.py:221: in _call_func
+    retval = await retval_or_awaitable
+venv/lib/python3.13/site-packages/fastapi/applications.py:1054: in __call__
+    await super().__call__(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/applications.py:112: in __call__
+    await self.middleware_stack(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/middleware/errors.py:187: in __call__
+    raise exc
+venv/lib/python3.13/site-packages/starlette/middleware/errors.py:165: in __call__
+    await self.app(scope, receive, _send)
+venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py:62: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+venv/lib/python3.13/site-packages/starlette/routing.py:714: in __call__
+    await self.middleware_stack(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:734: in app
+    await route.handle(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:288: in handle
+    await self.app(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:76: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+venv/lib/python3.13/site-packages/starlette/routing.py:73: in app
+    response = await f(request)
+venv/lib/python3.13/site-packages/fastapi/routing.py:301: in app
+    raw_response = await run_endpoint_function(
+venv/lib/python3.13/site-packages/fastapi/routing.py:212: in run_endpoint_function
+    return await dependant.call(**values)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+addr_in = AddressCreate(street_address='123 Main St', city='Testville', state='TS', postal_code='12345', country='Testland', is_default=False)
+db = <AsyncMock id='4483597040'>
+client = <myOrm.models.Client object at 0x10b3e52b0>
+
+    @router.post("/", response_model=AddressRead, status_code=status.HTTP_201_CREATED)
+    async def create_address(
+        addr_in: AddressCreate,
+        db: AsyncSession = Depends(get_db_session),
+        client: Client = Depends(validate_is_authenticated),
+    ):
+        # 1) Verify client exists
+        result = await db.execute(select(Client).where(Client.id == client.id))
+>       client = result.scalars().one_or_none()
+E       AttributeError: 'DummyResult' object has no attribute 'scalars'
+
+routers/addresses/views.py:23: AttributeError
+_____________________ test_create_address_client_not_found _____________________
+
+test_client = <starlette.testclient.TestClient object at 0x10bb3d160>
+mock_db_session = <AsyncMock id='4483612160'>
+
+    @ pytest.mark.asyncio
+    async def test_create_address_client_not_found(test_client, mock_db_session):
+        # Simulate client not found
+        mock_db_session.execute.return_value = DummyResult(None)
+        payload = {
+            "street_address": "123 Main St",
+            "city": "Testville",
+            "state": "TS",
+            "postal_code": "12345",
+            "country": "Testland",
+            "is_default": False
+        }
+>       response = test_client.post(
+            "/api/v1/users/addresses/",
+            json=payload
+        )
+
+tests/addresses/test_addresses.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.13/site-packages/starlette/testclient.py:538: in post
+    return super().post(
+venv/lib/python3.13/site-packages/httpx/_client.py:1144: in post
+    return self.request(
+venv/lib/python3.13/site-packages/starlette/testclient.py:437: in request
+    return super().request(
+venv/lib/python3.13/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+venv/lib/python3.13/site-packages/httpx/_client.py:914: in send
+    response = self._send_handling_auth(
+venv/lib/python3.13/site-packages/httpx/_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+venv/lib/python3.13/site-packages/httpx/_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+venv/lib/python3.13/site-packages/httpx/_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+venv/lib/python3.13/site-packages/starlette/testclient.py:340: in handle_request
+    raise exc
+venv/lib/python3.13/site-packages/starlette/testclient.py:337: in handle_request
+    portal.call(self.app, scope, receive, send)
+venv/lib/python3.13/site-packages/anyio/from_thread.py:290: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+venv/lib/python3.13/site-packages/anyio/from_thread.py:221: in _call_func
+    retval = await retval_or_awaitable
+venv/lib/python3.13/site-packages/fastapi/applications.py:1054: in __call__
+    await super().__call__(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/applications.py:112: in __call__
+    await self.middleware_stack(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/middleware/errors.py:187: in __call__
+    raise exc
+venv/lib/python3.13/site-packages/starlette/middleware/errors.py:165: in __call__
+    await self.app(scope, receive, _send)
+venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py:62: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+venv/lib/python3.13/site-packages/starlette/routing.py:714: in __call__
+    await self.middleware_stack(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:734: in app
+    await route.handle(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:288: in handle
+    await self.app(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:76: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+venv/lib/python3.13/site-packages/starlette/routing.py:73: in app
+    response = await f(request)
+venv/lib/python3.13/site-packages/fastapi/routing.py:301: in app
+    raw_response = await run_endpoint_function(
+venv/lib/python3.13/site-packages/fastapi/routing.py:212: in run_endpoint_function
+    return await dependant.call(**values)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+addr_in = AddressCreate(street_address='123 Main St', city='Testville', state='TS', postal_code='12345', country='Testland', is_default=False)
+db = <AsyncMock id='4483612160'>
+client = <myOrm.models.Client object at 0x10b37ccd0>
+
+    @router.post("/", response_model=AddressRead, status_code=status.HTTP_201_CREATED)
+    async def create_address(
+        addr_in: AddressCreate,
+        db: AsyncSession = Depends(get_db_session),
+        client: Client = Depends(validate_is_authenticated),
+    ):
+        # 1) Verify client exists
+        result = await db.execute(select(Client).where(Client.id == client.id))
+>       client = result.scalars().one_or_none()
+E       AttributeError: 'DummyResult' object has no attribute 'scalars'
+
+routers/addresses/views.py:23: AttributeError
+_________________________ test_list_addresses_success __________________________
+
+test_client = <starlette.testclient.TestClient object at 0x10bb3d160>
+mock_db_session = <AsyncMock id='4489695584'>
+
+    @ pytest.mark.asyncio
+    async def test_list_addresses_success(test_client, mock_db_session):
+        address = AddressModel(
+            id=1,
+            client_id=TEST_CLIENT_ID,
+            street_address="123 Main St",
+            city="Testville",
+            state="TS",
+            postal_code="12345",
+            country="Testland",
+            is_default=False
+        )
+        address.created_at = datetime.utcnow()
+        # Simulate list query
+        mock_db_session.execute.return_value.scalars.return_value.all.return_value = [address]
+>       response = test_client.get("/api/v1/users/addresses/")
+
+tests/addresses/test_addresses.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.13/site-packages/starlette/testclient.py:465: in get
+    return super().get(
+venv/lib/python3.13/site-packages/httpx/_client.py:1053: in get
+    return self.request(
+venv/lib/python3.13/site-packages/starlette/testclient.py:437: in request
+    return super().request(
+venv/lib/python3.13/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+venv/lib/python3.13/site-packages/httpx/_client.py:914: in send
+    response = self._send_handling_auth(
+venv/lib/python3.13/site-packages/httpx/_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+venv/lib/python3.13/site-packages/httpx/_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+venv/lib/python3.13/site-packages/httpx/_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+venv/lib/python3.13/site-packages/starlette/testclient.py:340: in handle_request
+    raise exc
+venv/lib/python3.13/site-packages/starlette/testclient.py:337: in handle_request
+    portal.call(self.app, scope, receive, send)
+venv/lib/python3.13/site-packages/anyio/from_thread.py:290: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+venv/lib/python3.13/site-packages/anyio/from_thread.py:221: in _call_func
+    retval = await retval_or_awaitable
+venv/lib/python3.13/site-packages/fastapi/applications.py:1054: in __call__
+    await super().__call__(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/applications.py:112: in __call__
+    await self.middleware_stack(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/middleware/errors.py:187: in __call__
+    raise exc
+venv/lib/python3.13/site-packages/starlette/middleware/errors.py:165: in __call__
+    await self.app(scope, receive, _send)
+venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py:62: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+venv/lib/python3.13/site-packages/starlette/routing.py:714: in __call__
+    await self.middleware_stack(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:734: in app
+    await route.handle(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:288: in handle
+    await self.app(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:76: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+venv/lib/python3.13/site-packages/starlette/routing.py:73: in app
+    response = await f(request)
+venv/lib/python3.13/site-packages/fastapi/routing.py:301: in app
+    raw_response = await run_endpoint_function(
+venv/lib/python3.13/site-packages/fastapi/routing.py:212: in run_endpoint_function
+    return await dependant.call(**values)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+db = <AsyncMock id='4489695584'>
+client = <myOrm.models.Client object at 0x10bb5c180>
+
+    @router.get("/", response_model=list[AddressRead])
+    async def list_addresses(
+        db: AsyncSession = Depends(get_db_session),
+        client: Client = Depends(validate_is_authenticated),
+    ):
+        result = await db.execute(
+            select(AddressModel).where(AddressModel.client_id == client.id)
+        )
+>       addresses = result.scalars().all()
+E       AttributeError: 'coroutine' object has no attribute 'all'
+
+routers/addresses/views.py:46: AttributeError
+__________________________ test_list_addresses_empty ___________________________
+
+test_client = <starlette.testclient.TestClient object at 0x10bb3d160>
+mock_db_session = <AsyncMock id='4489705328'>
+
+    @ pytest.mark.asyncio
+    async def test_list_addresses_empty(test_client, mock_db_session):
+        mock_db_session.execute.return_value.scalars.return_value.all.return_value = []
+>       response = test_client.get("/api/v1/users/addresses/")
+
+tests/addresses/test_addresses.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.13/site-packages/starlette/testclient.py:465: in get
+    return super().get(
+venv/lib/python3.13/site-packages/httpx/_client.py:1053: in get
+    return self.request(
+venv/lib/python3.13/site-packages/starlette/testclient.py:437: in request
+    return super().request(
+venv/lib/python3.13/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+venv/lib/python3.13/site-packages/httpx/_client.py:914: in send
+    response = self._send_handling_auth(
+venv/lib/python3.13/site-packages/httpx/_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+venv/lib/python3.13/site-packages/httpx/_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+venv/lib/python3.13/site-packages/httpx/_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+venv/lib/python3.13/site-packages/starlette/testclient.py:340: in handle_request
+    raise exc
+venv/lib/python3.13/site-packages/starlette/testclient.py:337: in handle_request
+    portal.call(self.app, scope, receive, send)
+venv/lib/python3.13/site-packages/anyio/from_thread.py:290: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+venv/lib/python3.13/site-packages/anyio/from_thread.py:221: in _call_func
+    retval = await retval_or_awaitable
+venv/lib/python3.13/site-packages/fastapi/applications.py:1054: in __call__
+    await super().__call__(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/applications.py:112: in __call__
+    await self.middleware_stack(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/middleware/errors.py:187: in __call__
+    raise exc
+venv/lib/python3.13/site-packages/starlette/middleware/errors.py:165: in __call__
+    await self.app(scope, receive, _send)
+venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py:62: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+venv/lib/python3.13/site-packages/starlette/routing.py:714: in __call__
+    await self.middleware_stack(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:734: in app
+    await route.handle(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:288: in handle
+    await self.app(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:76: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+venv/lib/python3.13/site-packages/starlette/routing.py:73: in app
+    response = await f(request)
+venv/lib/python3.13/site-packages/fastapi/routing.py:301: in app
+    raw_response = await run_endpoint_function(
+venv/lib/python3.13/site-packages/fastapi/routing.py:212: in run_endpoint_function
+    return await dependant.call(**values)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+db = <AsyncMock id='4489705328'>
+client = <myOrm.models.Client object at 0x10b8defd0>
+
+    @router.get("/", response_model=list[AddressRead])
+    async def list_addresses(
+        db: AsyncSession = Depends(get_db_session),
+        client: Client = Depends(validate_is_authenticated),
+    ):
+        result = await db.execute(
+            select(AddressModel).where(AddressModel.client_id == client.id)
+        )
+>       addresses = result.scalars().all()
+E       AttributeError: 'coroutine' object has no attribute 'all'
+
+routers/addresses/views.py:46: AttributeError
+___________________________ test_get_address_success ___________________________
+
+test_client = <starlette.testclient.TestClient object at 0x10bb3d160>
+mock_db_session = <AsyncMock id='4483610144'>
+
+    @ pytest.mark.asyncio
+    async def test_get_address_success(test_client, mock_db_session):
+        address = AddressModel(
+            id=1,
+            client_id=TEST_CLIENT_ID,
+            street_address="123 Main St",
+            city="Testville",
+            state="TS",
+            postal_code="12345",
+            country="Testland",
+            is_default=False
+        )
+        address.created_at = datetime.utcnow()
+        mock_db_session.execute.return_value.scalars.return_value.one_or_none.return_value = address
+>       response = test_client.get("/api/v1/users/addresses/1")
+
+tests/addresses/test_addresses.py:103: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.13/site-packages/starlette/testclient.py:465: in get
+    return super().get(
+venv/lib/python3.13/site-packages/httpx/_client.py:1053: in get
+    return self.request(
+venv/lib/python3.13/site-packages/starlette/testclient.py:437: in request
+    return super().request(
+venv/lib/python3.13/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+venv/lib/python3.13/site-packages/httpx/_client.py:914: in send
+    response = self._send_handling_auth(
+venv/lib/python3.13/site-packages/httpx/_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+venv/lib/python3.13/site-packages/httpx/_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+venv/lib/python3.13/site-packages/httpx/_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+venv/lib/python3.13/site-packages/starlette/testclient.py:340: in handle_request
+    raise exc
+venv/lib/python3.13/site-packages/starlette/testclient.py:337: in handle_request
+    portal.call(self.app, scope, receive, send)
+venv/lib/python3.13/site-packages/anyio/from_thread.py:290: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+venv/lib/python3.13/site-packages/anyio/from_thread.py:221: in _call_func
+    retval = await retval_or_awaitable
+venv/lib/python3.13/site-packages/fastapi/applications.py:1054: in __call__
+    await super().__call__(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/applications.py:112: in __call__
+    await self.middleware_stack(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/middleware/errors.py:187: in __call__
+    raise exc
+venv/lib/python3.13/site-packages/starlette/middleware/errors.py:165: in __call__
+    await self.app(scope, receive, _send)
+venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py:62: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+venv/lib/python3.13/site-packages/starlette/routing.py:714: in __call__
+    await self.middleware_stack(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:734: in app
+    await route.handle(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:288: in handle
+    await self.app(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:76: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+venv/lib/python3.13/site-packages/starlette/routing.py:73: in app
+    response = await f(request)
+venv/lib/python3.13/site-packages/fastapi/routing.py:301: in app
+    raw_response = await run_endpoint_function(
+venv/lib/python3.13/site-packages/fastapi/routing.py:212: in run_endpoint_function
+    return await dependant.call(**values)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+address_id = 1, db = <AsyncMock id='4483610144'>
+client = <myOrm.models.Client object at 0x109076f90>
+
+    @router.get("/{address_id}", response_model=AddressRead)
+    async def get_address(
+        address_id: int,
+        db: AsyncSession = Depends(get_db_session),
+        client: Client = Depends(validate_is_authenticated),
+    ):
+        result = await db.execute(
+            select(AddressModel).where(
+                AddressModel.id == address_id,
+                AddressModel.client_id == client.id
+            )
+        )
+>       address = result.scalars().one_or_none()
+E       AttributeError: 'coroutine' object has no attribute 'one_or_none'
+
+routers/addresses/views.py:61: AttributeError
+__________________________ test_get_address_not_found __________________________
+
+test_client = <starlette.testclient.TestClient object at 0x10bb3d160>
+mock_db_session = <AsyncMock id='4483599392'>
+
+    @ pytest.mark.asyncio
+    async def test_get_address_not_found(test_client, mock_db_session):
+        mock_db_session.execute.return_value.scalars.return_value.one_or_none.return_value = None
+>       response = test_client.get("/api/v1/users/addresses/1")
+
+tests/addresses/test_addresses.py:114: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.13/site-packages/starlette/testclient.py:465: in get
+    return super().get(
+venv/lib/python3.13/site-packages/httpx/_client.py:1053: in get
+    return self.request(
+venv/lib/python3.13/site-packages/starlette/testclient.py:437: in request
+    return super().request(
+venv/lib/python3.13/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+venv/lib/python3.13/site-packages/httpx/_client.py:914: in send
+    response = self._send_handling_auth(
+venv/lib/python3.13/site-packages/httpx/_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+venv/lib/python3.13/site-packages/httpx/_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+venv/lib/python3.13/site-packages/httpx/_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+venv/lib/python3.13/site-packages/starlette/testclient.py:340: in handle_request
+    raise exc
+venv/lib/python3.13/site-packages/starlette/testclient.py:337: in handle_request
+    portal.call(self.app, scope, receive, send)
+venv/lib/python3.13/site-packages/anyio/from_thread.py:290: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+venv/lib/python3.13/site-packages/anyio/from_thread.py:221: in _call_func
+    retval = await retval_or_awaitable
+venv/lib/python3.13/site-packages/fastapi/applications.py:1054: in __call__
+    await super().__call__(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/applications.py:112: in __call__
+    await self.middleware_stack(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/middleware/errors.py:187: in __call__
+    raise exc
+venv/lib/python3.13/site-packages/starlette/middleware/errors.py:165: in __call__
+    await self.app(scope, receive, _send)
+venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py:62: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+venv/lib/python3.13/site-packages/starlette/routing.py:714: in __call__
+    await self.middleware_stack(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:734: in app
+    await route.handle(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:288: in handle
+    await self.app(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:76: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+venv/lib/python3.13/site-packages/starlette/routing.py:73: in app
+    response = await f(request)
+venv/lib/python3.13/site-packages/fastapi/routing.py:301: in app
+    raw_response = await run_endpoint_function(
+venv/lib/python3.13/site-packages/fastapi/routing.py:212: in run_endpoint_function
+    return await dependant.call(**values)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+address_id = 1, db = <AsyncMock id='4483599392'>
+client = <myOrm.models.Client object at 0x10b34f460>
+
+    @router.get("/{address_id}", response_model=AddressRead)
+    async def get_address(
+        address_id: int,
+        db: AsyncSession = Depends(get_db_session),
+        client: Client = Depends(validate_is_authenticated),
+    ):
+        result = await db.execute(
+            select(AddressModel).where(
+                AddressModel.id == address_id,
+                AddressModel.client_id == client.id
+            )
+        )
+>       address = result.scalars().one_or_none()
+E       AttributeError: 'coroutine' object has no attribute 'one_or_none'
+
+routers/addresses/views.py:61: AttributeError
+_________________________ test_delete_address_success __________________________
+
+test_client = <starlette.testclient.TestClient object at 0x10bb3d160>
+mock_db_session = <AsyncMock id='4446703968'>
+
+    @ pytest.mark.asyncio
+    async def test_delete_address_success(test_client, mock_db_session):
+        address = AddressModel(
+            id=1,
+            client_id=TEST_CLIENT_ID,
+            street_address="123 Main St",
+            city="Testville",
+            state="TS",
+            postal_code="12345",
+            country="Testland",
+            is_default=False
+        )
+        address.created_at = datetime.utcnow()
+        mock_db_session.execute.return_value.scalars.return_value.one_or_none.return_value = address
+>       response = test_client.delete("/api/v1/users/addresses/1")
+
+tests/addresses/test_addresses.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.13/site-packages/starlette/testclient.py:627: in delete
+    return super().delete(
+venv/lib/python3.13/site-packages/httpx/_client.py:1251: in delete
+    return self.request(
+venv/lib/python3.13/site-packages/starlette/testclient.py:437: in request
+    return super().request(
+venv/lib/python3.13/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+venv/lib/python3.13/site-packages/httpx/_client.py:914: in send
+    response = self._send_handling_auth(
+venv/lib/python3.13/site-packages/httpx/_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+venv/lib/python3.13/site-packages/httpx/_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+venv/lib/python3.13/site-packages/httpx/_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+venv/lib/python3.13/site-packages/starlette/testclient.py:340: in handle_request
+    raise exc
+venv/lib/python3.13/site-packages/starlette/testclient.py:337: in handle_request
+    portal.call(self.app, scope, receive, send)
+venv/lib/python3.13/site-packages/anyio/from_thread.py:290: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+venv/lib/python3.13/site-packages/anyio/from_thread.py:221: in _call_func
+    retval = await retval_or_awaitable
+venv/lib/python3.13/site-packages/fastapi/applications.py:1054: in __call__
+    await super().__call__(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/applications.py:112: in __call__
+    await self.middleware_stack(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/middleware/errors.py:187: in __call__
+    raise exc
+venv/lib/python3.13/site-packages/starlette/middleware/errors.py:165: in __call__
+    await self.app(scope, receive, _send)
+venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py:62: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+venv/lib/python3.13/site-packages/starlette/routing.py:714: in __call__
+    await self.middleware_stack(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:734: in app
+    await route.handle(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:288: in handle
+    await self.app(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:76: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+venv/lib/python3.13/site-packages/starlette/routing.py:73: in app
+    response = await f(request)
+venv/lib/python3.13/site-packages/fastapi/routing.py:301: in app
+    raw_response = await run_endpoint_function(
+venv/lib/python3.13/site-packages/fastapi/routing.py:212: in run_endpoint_function
+    return await dependant.call(**values)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+address_id = 1, db = <AsyncMock id='4446703968'>
+client = <myOrm.models.Client object at 0x10908cf30>
+
+    @router.delete("/{address_id}", status_code=status.HTTP_204_NO_CONTENT)
+    async def delete_address(
+        address_id: int,
+        db: AsyncSession = Depends(get_db_session),
+        client: Client = Depends(validate_is_authenticated),
+    ):
+        result = await db.execute(
+            select(AddressModel).where(
+                AddressModel.id == address_id,
+                AddressModel.client_id == client.id
+            )
+        )
+>       address = result.scalars().one_or_none()
+E       AttributeError: 'coroutine' object has no attribute 'one_or_none'
+
+routers/addresses/views.py:82: AttributeError
+________________________ test_delete_address_not_found _________________________
+
+test_client = <starlette.testclient.TestClient object at 0x10bb3d160>
+mock_db_session = <AsyncMock id='4479977184'>
+
+    @ pytest.mark.asyncio
+    async def test_delete_address_not_found(test_client, mock_db_session):
+        mock_db_session.execute.return_value.scalars.return_value.one_or_none.return_value = None
+>       response = test_client.delete("/api/v1/users/addresses/1")
+
+tests/addresses/test_addresses.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+venv/lib/python3.13/site-packages/starlette/testclient.py:627: in delete
+    return super().delete(
+venv/lib/python3.13/site-packages/httpx/_client.py:1251: in delete
+    return self.request(
+venv/lib/python3.13/site-packages/starlette/testclient.py:437: in request
+    return super().request(
+venv/lib/python3.13/site-packages/httpx/_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+venv/lib/python3.13/site-packages/httpx/_client.py:914: in send
+    response = self._send_handling_auth(
+venv/lib/python3.13/site-packages/httpx/_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+venv/lib/python3.13/site-packages/httpx/_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+venv/lib/python3.13/site-packages/httpx/_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+venv/lib/python3.13/site-packages/starlette/testclient.py:340: in handle_request
+    raise exc
+venv/lib/python3.13/site-packages/starlette/testclient.py:337: in handle_request
+    portal.call(self.app, scope, receive, send)
+venv/lib/python3.13/site-packages/anyio/from_thread.py:290: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/concurrent/futures/_base.py:456: in result
+    return self.__get_result()
+/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/concurrent/futures/_base.py:401: in __get_result
+    raise self._exception
+venv/lib/python3.13/site-packages/anyio/from_thread.py:221: in _call_func
+    retval = await retval_or_awaitable
+venv/lib/python3.13/site-packages/fastapi/applications.py:1054: in __call__
+    await super().__call__(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/applications.py:112: in __call__
+    await self.middleware_stack(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/middleware/errors.py:187: in __call__
+    raise exc
+venv/lib/python3.13/site-packages/starlette/middleware/errors.py:165: in __call__
+    await self.app(scope, receive, _send)
+venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py:62: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+venv/lib/python3.13/site-packages/starlette/routing.py:714: in __call__
+    await self.middleware_stack(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:734: in app
+    await route.handle(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:288: in handle
+    await self.app(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/routing.py:76: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:53: in wrapped_app
+    raise exc
+venv/lib/python3.13/site-packages/starlette/_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+venv/lib/python3.13/site-packages/starlette/routing.py:73: in app
+    response = await f(request)
+venv/lib/python3.13/site-packages/fastapi/routing.py:301: in app
+    raw_response = await run_endpoint_function(
+venv/lib/python3.13/site-packages/fastapi/routing.py:212: in run_endpoint_function
+    return await dependant.call(**values)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+address_id = 1, db = <AsyncMock id='4479977184'>
+client = <myOrm.models.Client object at 0x108285d50>
+
+    @router.delete("/{address_id}", status_code=status.HTTP_204_NO_CONTENT)
+    async def delete_address(
+        address_id: int,
+        db: AsyncSession = Depends(get_db_session),
+        client: Client = Depends(validate_is_authenticated),
+    ):
+        result = await db.execute(
+            select(AddressModel).where(
+                AddressModel.id == address_id,
+                AddressModel.client_id == client.id
+            )
+        )
+>       address = result.scalars().one_or_none()
+E       AttributeError: 'coroutine' object has no attribute 'one_or_none'
+
+routers/addresses/views.py:82: AttributeError
+=============================== warnings summary ===============================
+venv/lib/python3.13/site-packages/pydantic/_internal/_config.py:323
+venv/lib/python3.13/site-packages/pydantic/_internal/_config.py:323
+  /Users/juanasoto/Desktop/SoftwareDev/official_proyects/zartex/code/backend/services/users/venv/lib/python3.13/site-packages/pydantic/_internal/_config.py:323: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+    warnings.warn(DEPRECATION_MESSAGE, DeprecationWarning)
+
+venv/lib/python3.13/site-packages/pydantic/_internal/_config.py:373
+  /Users/juanasoto/Desktop/SoftwareDev/official_proyects/zartex/code/backend/services/users/venv/lib/python3.13/site-packages/pydantic/_internal/_config.py:373: UserWarning: Valid config keys have changed in V2:
+  * 'orm_mode' has been renamed to 'from_attributes'
+    warnings.warn(message, UserWarning)
+
+venv/lib/python3.13/site-packages/botocore/auth.py:425
+venv/lib/python3.13/site-packages/botocore/auth.py:425
+  /Users/juanasoto/Desktop/SoftwareDev/official_proyects/zartex/code/backend/services/users/venv/lib/python3.13/site-packages/botocore/auth.py:425: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    datetime_now = datetime.datetime.utcnow()
+
+tests/addresses/test_addresses.py::test_create_address_success
+tests/addresses/test_addresses.py::test_create_address_client_not_found
+tests/addresses/test_addresses.py::test_list_addresses_success
+tests/addresses/test_addresses.py::test_list_addresses_empty
+tests/addresses/test_addresses.py::test_get_address_success
+tests/addresses/test_addresses.py::test_get_address_not_found
+tests/addresses/test_addresses.py::test_delete_address_success
+tests/addresses/test_addresses.py::test_delete_address_not_found
+  /Users/juanasoto/Desktop/SoftwareDev/official_proyects/zartex/code/backend/services/users/tests/conftest.py:60: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    user.created_at   = datetime.utcnow()
+
+tests/addresses/test_addresses.py::test_create_address_success
+  /Users/juanasoto/Desktop/SoftwareDev/official_proyects/zartex/code/backend/services/users/tests/conftest.py:97: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    client.created_at = datetime.utcnow()
+
+tests/addresses/test_addresses.py::test_list_addresses_success
+  /Users/juanasoto/Desktop/SoftwareDev/official_proyects/zartex/code/backend/services/users/tests/addresses/test_addresses.py:69: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    address.created_at = datetime.utcnow()
+
+tests/addresses/test_addresses.py::test_get_address_success
+  /Users/juanasoto/Desktop/SoftwareDev/official_proyects/zartex/code/backend/services/users/tests/addresses/test_addresses.py:101: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    address.created_at = datetime.utcnow()
+
+tests/addresses/test_addresses.py::test_delete_address_success
+  /Users/juanasoto/Desktop/SoftwareDev/official_proyects/zartex/code/backend/services/users/tests/addresses/test_addresses.py:131: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    address.created_at = datetime.utcnow()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/addresses/test_addresses.py::test_create_address_success - Attri...
+FAILED tests/addresses/test_addresses.py::test_create_address_client_not_found
+FAILED tests/addresses/test_addresses.py::test_list_addresses_success - Attri...
+FAILED tests/addresses/test_addresses.py::test_list_addresses_empty - Attribu...
+FAILED tests/addresses/test_addresses.py::test_get_address_success - Attribut...
+FAILED tests/addresses/test_addresses.py::test_get_address_not_found - Attrib...
+FAILED tests/addresses/test_addresses.py::test_delete_address_success - Attri...
+FAILED tests/addresses/test_addresses.py::test_delete_address_not_found - Att...
+======================== 8 failed, 17 warnings in 1.21s ========================

@@ -1,20 +1,34 @@
 Metadata-Version: 2.4
 Name: myExceptions
-Version: 0.0.3
+Version: 0.0.4
 Summary: Exceptions package for Zartex
 Author: Bruce Wayne
-Requires-Dist: annotated-types==0.7.0
-Requires-Dist: anyio==4.9.0
-Requires-Dist: fastapi==0.115.12
-Requires-Dist: idna==3.10
-Requires-Dist: pydantic==2.11.4
-Requires-Dist: pydantic_core==2.33.2
-Requires-Dist: setuptools==80.7.1
-Requires-Dist: sniffio==1.3.1
-Requires-Dist: starlette==0.46.2
-Requires-Dist: typing-inspection==0.4.0
-Requires-Dist: typing_extensions==4.13.2
-Requires-Dist: wheel==0.45.1
+Provides-Extra: docker
+Requires-Dist: annotated-types==0.7.0; extra == "docker"
+Requires-Dist: anyio==4.9.0; extra == "docker"
+Requires-Dist: fastapi==0.115.12; extra == "docker"
+Requires-Dist: idna==3.10; extra == "docker"
+Requires-Dist: pydantic==2.11.4; extra == "docker"
+Requires-Dist: pydantic_core==2.33.2; extra == "docker"
+Requires-Dist: setuptools==80.7.1; extra == "docker"
+Requires-Dist: sniffio==1.3.1; extra == "docker"
+Requires-Dist: starlette==0.46.2; extra == "docker"
+Requires-Dist: typing-inspection==0.4.0; extra == "docker"
+Requires-Dist: typing_extensions==4.13.2; extra == "docker"
+Requires-Dist: wheel==0.45.1; extra == "docker"
+Provides-Extra: dev
+Requires-Dist: annotated-types==0.7.0; extra == "dev"
+Requires-Dist: anyio==4.9.0; extra == "dev"
+Requires-Dist: fastapi==0.115.12; extra == "dev"
+Requires-Dist: idna==3.10; extra == "dev"
+Requires-Dist: pydantic==2.11.4; extra == "dev"
+Requires-Dist: pydantic_core==2.33.2; extra == "dev"
+Requires-Dist: setuptools==80.7.1; extra == "dev"
+Requires-Dist: sniffio==1.3.1; extra == "dev"
+Requires-Dist: starlette==0.46.2; extra == "dev"
+Requires-Dist: typing-inspection==0.4.0; extra == "dev"
+Requires-Dist: typing_extensions==4.13.2; extra == "dev"
+Requires-Dist: wheel==0.45.1; extra == "dev"
 Dynamic: author
-Dynamic: requires-dist
+Dynamic: provides-extra
 Dynamic: summary
